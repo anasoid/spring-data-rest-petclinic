@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +61,10 @@ public class Owner extends Person {
 	@Pattern(regexp = "\\d{10}", message = "{telephone.invalid}")
 	private String telephone;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "owner_id")
 	@OrderBy("name")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private final List<Pet> pets = new ArrayList<>();
 
 	public String getAddress() {

@@ -15,6 +15,12 @@
  */
 package org.springframework.samples.petclinic.vet;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import java.util.Set;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
 import jakarta.persistence.Entity;
@@ -28,5 +34,10 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "specialties")
 public class Specialty extends NamedEntity {
+
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "specialties")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Set<Vet> vets;
+
 
 }

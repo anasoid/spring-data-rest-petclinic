@@ -23,6 +23,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 /**
  * Repository class for <code>Owner</code> domain objects. All method names are compliant
@@ -36,6 +38,7 @@ import org.springframework.data.jpa.repository.Query;
  * @author Michael Isvy
  * @author Wick Dynex
  */
+@RepositoryRestResource(exported = true)
 public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 
 	/**
@@ -47,6 +50,15 @@ public interface OwnerRepository extends JpaRepository<Owner, Integer> {
 	 */
 	Page<Owner> findByLastNameStartingWith(String lastName, Pageable pageable);
 
+	/**
+	 * Retrieve {@link Owner}s from the data store by last name, returning all owners
+	 * whose last name <i>starts</i> with the given name.
+	 * @param lastName Value to search for
+	 * @return a Collection of matching {@link Owner}s (or an empty Collection if none
+	 * found)
+	 */
+	@RestResource(exported = false)
+	Page<Owner> findByFirstNameStartingWith(String lastName, Pageable pageable);
 	/**
 	 * Retrieve an {@link Owner} from the data store by id.
 	 * <p>
